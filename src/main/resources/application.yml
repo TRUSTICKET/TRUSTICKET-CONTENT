@@ -4,8 +4,6 @@ spring:
   elasticsearch:
     uri: localhost:9200
 
-
-
 # Swagger
 springdoc:
   swagger-ui:
@@ -32,4 +30,9 @@ springdoc:
 error:
   printStackTrace: true # Stack trace ?? ??
   printStackTraceLine: 10 # Stack trace ?? ? ?
+
+server:
+  port: 8081
+
+
 

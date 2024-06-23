@@ -1,9 +1,10 @@
 package com.trusticket.trusticketcontent.common.exception.global;
 
 
-import com.trusticket.trusticketcore.common.ErrorDefineCode;
-import com.trusticket.trusticketcore.common.response.CommonError;
-import com.trusticket.trusticketcore.common.response.CommonResponse;
+
+import com.trusticket.trusticketcontent.common.ErrorDefineCode;
+import com.trusticket.trusticketcontent.common.response.CommonError;
+import com.trusticket.trusticketcontent.common.response.CommonResponse;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;

@@ -1,6 +1,6 @@
 package com.trusticket.trusticketcontent.common.exception.custom;
 
-import com.trusticket.trusticketcore.common.ErrorDefineCode;
+import com.trusticket.trusticketcontent.common.ErrorDefineCode;
 import lombok.Getter;
 
 @Getter
