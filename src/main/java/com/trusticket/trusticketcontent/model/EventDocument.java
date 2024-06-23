@@ -1,29 +1,27 @@
 package com.trusticket.trusticketcontent.model;
 
+import com.trusticket.trusticketcontent.dto.EventRequest;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
 
 import java.time.LocalDateTime;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Document(indexName = "content")
-
-@Setting(settingPath = "config/elasticsearch/setting/content-setting.json")
+@Document(indexName = "event")
+@Setting(settingPath = "elasticsearch/setting/event-setting.json")
 @AllArgsConstructor
 @Builder
-public class ContentDocument{
+public class EventDocument {
     @Id
     @Field(type = FieldType.Keyword)
-    private Long id;
+    private String id;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, analyzer = "korean")
     private String title; // 이벤트 제목
 
-    @Field(type = FieldType.Text)
-    private String contnet; // 이벤트 내용
+    @Field(type = FieldType.Text, analyzer = "korean")
+    private String content; // 이벤트 내용
 
     @Field(type = FieldType.Text)
     private String schedule; // 이벤트 기간
@@ -49,6 +47,21 @@ public class ContentDocument{
 
     @Field(type = FieldType.Date, format = {DateFormat.date_hour_minute_second_millis, DateFormat.epoch_millis})
     private LocalDateTime endDate; // 예매 종료시간
+
+    public static EventDocument parseReqeust(EventRequest request){
+        return EventDocument.builder()
+                .title(request.getTitle())
+                .content(request.getContent())
+                .schedule(request.getSchedule())
+                .place(request.getPlace())
+                .mainImage(request.getMainImage())
+                .thumbnailImage(request.getThumbnailImage())
+                .price(request.getPrice())
+                .max_stock(request.getMax_stock())
+                .startDate(request.getStartDate())
+                .endDate(request.getEndDate())
+                .build();
+    }
 
 
 }

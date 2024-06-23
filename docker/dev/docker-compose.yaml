@@ -9,12 +9,16 @@ services:
     build:
       dockerfile: ./Dockerfile
       args:
-        VERSION: 7.13.2
+        VERSION: 8.14.1
     container_name: tt-elasticsearch
     environment:
       - node.name=single-node
       - cluster.name=tt-elasticsearch
       - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.security.enrollment.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - xpack.security.transport.ssl.enabled=false
     ports:
       - 9200:9200
       - 9300:9300
@@ -24,7 +28,7 @@ services:
       - es-bridge
 
   tt-kibana:
-    image: docker.elastic.co/kibana/kibana:7.13.2
+    image: docker.elastic.co/kibana/kibana:8.14.1
     container_name: tt-kibana
     environment:
       SERVER_NAME: tt-kibana

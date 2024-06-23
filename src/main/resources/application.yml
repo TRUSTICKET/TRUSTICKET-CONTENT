@@ -2,7 +2,7 @@ spring:
   application:
     name: trusticket
   elasticsearch:
-    uri: localhost:9200
+    url: localhost:9200
 
 # Swagger
 springdoc:

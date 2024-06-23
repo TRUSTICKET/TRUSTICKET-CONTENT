@@ -8,7 +8,7 @@ import org.springframework.data.elasticsearch.client.elc.ElasticsearchConfigurat
 @Configuration
 public class ElasticSearchConfig extends ElasticsearchConfiguration {
 
-    @Value("${spring.elasticsearch.uri}")
+    @Value("${spring.elasticsearch.url}")
     private String uri;
 
     @Override
