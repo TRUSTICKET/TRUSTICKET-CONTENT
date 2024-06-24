@@ -4,10 +4,9 @@ import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import com.trusticket.trusticketcontent.common.ErrorDefineCode;
 import com.trusticket.trusticketcontent.common.exception.custom.exception.NoSuchElementFoundException404;
-import com.trusticket.trusticketcontent.dto.EventListResponse;
-import com.trusticket.trusticketcontent.dto.EventRequest;
-import com.trusticket.trusticketcontent.dto.EventResponse;
-import com.trusticket.trusticketcontent.dto.PageInfoResponse;
+import com.trusticket.trusticketcontent.common.kafka.KafkaProducer;
+import com.trusticket.trusticketcontent.common.util.DatetimeUtil;
+import com.trusticket.trusticketcontent.dto.*;
 import com.trusticket.trusticketcontent.model.EventDocument;
 import com.trusticket.trusticketcontent.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,11 +24,23 @@ import java.util.Optional;
 public class EventService {
 
     private final EventRepository eventRepository;
+    private final KafkaProducer kafkaProducer;
 
     @Transactional
     public EventResponse saveEvent(EventRequest request) {
         EventDocument document = EventDocument.parseReqeust(request);
+
         document = eventRepository.save(document);
+        kafkaProducer.sendEventData(
+                "event-create",
+                EventData.builder()
+                        .maxStock(document.getMax_stock())
+                        .stock(document.getMax_stock())
+                        .eventId(document.getId())
+                        .price(document.getPrice())
+                        .startDate(DatetimeUtil.parseDatetimeToString(document.getStartDate()))
+                        .endDate(DatetimeUtil.parseDatetimeToString(document.getEndDate()))
+                        .build());
         EventResponse response = EventResponse.parseDocument(document);
         return response;
     }

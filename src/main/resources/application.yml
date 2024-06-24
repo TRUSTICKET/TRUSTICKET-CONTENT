@@ -3,6 +3,8 @@ spring:
     name: trusticket
   elasticsearch:
     url: localhost:9200
+  kafka:
+    url: localhost:9092
 
 # Swagger
 springdoc:
