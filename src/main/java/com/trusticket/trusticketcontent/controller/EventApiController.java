@@ -1,16 +1,17 @@
 package com.trusticket.trusticketcontent.controller;
 
 import com.trusticket.trusticketcontent.common.response.CommonResponse;
+import com.trusticket.trusticketcontent.dto.EventListResponse;
 import com.trusticket.trusticketcontent.dto.EventRequest;
 import com.trusticket.trusticketcontent.dto.EventResponse;
 import com.trusticket.trusticketcontent.service.EventService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/content")
@@ -32,9 +33,24 @@ public class EventApiController {
 
     @GetMapping("/title/{partialTitle}")
     @Operation(summary = "제목으로 이벤트 검색")
-    public CommonResponse<List<EventResponse>> searchByTitle(
-            @PathVariable String partialTitle) {
-        List<EventResponse> result = eventService.searchEventsByTitle(partialTitle);
+    public CommonResponse<EventListResponse> queryListByTitle(
+            @PathVariable String partialTitle,
+            @RequestParam int page,
+            @RequestParam int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        EventListResponse result = eventService.searchEventsByTitleWithPage(partialTitle, pageable);
+        return new CommonResponse(
+                true, HttpStatus.OK, "조회가 완료되었습니다.", result
+        );
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "ID로 이벤트 검색")
+    public CommonResponse<EventResponse> queryOneById(
+            @PathVariable String id
+    ) {
+        EventResponse result = eventService.searchEventById(id);
         return new CommonResponse(
                 true, HttpStatus.OK, "조회가 완료되었습니다.", result
         );
