@@ -1,6 +1,6 @@
 spring:
   application:
-    name: trusticket
+    name: trusticket-content
   elasticsearch:
     url: localhost:9200
   kafka:
@@ -36,5 +36,13 @@ error:
 server:
   port: 8081
 
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
 
