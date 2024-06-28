@@ -1,6 +1,7 @@
-package com.trusticket.trusticketcontent.controller;
+package com.trusticket.trusticketcontent.api;
 
 import com.trusticket.trusticketcontent.common.response.CommonResponse;
+import com.trusticket.trusticketcontent.dto.EventDetailResponse;
 import com.trusticket.trusticketcontent.dto.EventListResponse;
 import com.trusticket.trusticketcontent.dto.EventRequest;
 import com.trusticket.trusticketcontent.dto.EventResponse;
@@ -47,10 +48,10 @@ public class EventApiController {
 
     @GetMapping("/{id}")
     @Operation(summary = "ID로 이벤트 검색")
-    public CommonResponse<EventResponse> queryOneById(
+    public CommonResponse<EventDetailResponse> queryOneById(
             @PathVariable String id
     ) {
-        EventResponse result = eventService.searchEventById(id);
+        EventDetailResponse result = eventService.searchEventById(id);
         return new CommonResponse(
                 true, HttpStatus.OK, "조회가 완료되었습니다.", result
         );

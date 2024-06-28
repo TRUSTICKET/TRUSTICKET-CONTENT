@@ -71,12 +71,12 @@ public class EventService {
         return response;
     }
 
-    public EventResponse searchEventById(String id) {
+    public EventDetailResponse searchEventById(String id) {
         EventDocument document = eventRepository.findById(id)
                 .orElseThrow(() ->
                         new NoSuchElementFoundException404(ErrorDefineCode.DUPLICATE_EXAMPLE_NAME));
 
-        EventResponse result = EventResponse.parseDocument(document);
+        EventDetailResponse result = EventDetailResponse.parseDocument(document);
         return result;
     }
 }
