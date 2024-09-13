@@ -10,6 +10,7 @@ import com.trusticket.trusticketcontent.dto.*;
 import com.trusticket.trusticketcontent.model.EventDocument;
 import com.trusticket.trusticketcontent.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -51,6 +52,7 @@ public class EventService {
         return result;
     }
 
+    @Cacheable(value = "eventsByTitle", key = "#partialTitle + ':' + #pageable.pageNumber + ':' + #pageable.pageSize")
     public EventListResponse searchEventsByTitleWithPage(String partialTitle, Pageable pageable) {
         Page<EventDocument> data = eventRepository.findByTitle(partialTitle, pageable);
         List<EventDocument> documents = data.getContent();
