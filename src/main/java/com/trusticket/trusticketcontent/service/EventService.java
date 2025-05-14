@@ -1,7 +1,5 @@
 package com.trusticket.trusticketcontent.service;
 
-import co.elastic.clients.elasticsearch.core.SearchRequest;
-import co.elastic.clients.elasticsearch.core.SearchResponse;
 import com.trusticket.trusticketcontent.common.ErrorDefineCode;
 import com.trusticket.trusticketcontent.common.exception.custom.exception.NoSuchElementFoundException404;
 import com.trusticket.trusticketcontent.common.kafka.KafkaProducer;
@@ -16,9 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

@@ -19,7 +19,7 @@ public class KafkaProducerConfig {
 
     private final String url;
     public KafkaProducerConfig(
-            @Value("${spring.kafka.url}") String url
+            @Value("${spring.kafka.bootstrap-servers}") String url
     ) {
         this.url = url;
     }

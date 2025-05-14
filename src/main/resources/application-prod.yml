@@ -2,13 +2,16 @@ spring:
   application:
     name: trusticket-content
   elasticsearch:
-    url: localhost:9200
+    url: ${SPRING_ELASTICSEARCH_SERVERS:localhost:9200}
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+  cloud:
+    discovery:
+      enabled: false
 
 redis:
-  host: localhost
-  port: 6395
+  host: ${REDIS_HOST:localhost}
+  port: ${REDIS_PORT:6379}
 
 # Swagger
 springdoc:
@@ -38,15 +41,4 @@ error:
   printStackTraceLine: 10 # Stack trace ?? ? ?
 
 server:
-  port: 8083
-
-eureka:
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://127.0.0.1:8761/eureka
-  instance:
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-
-
+  port: 8080
